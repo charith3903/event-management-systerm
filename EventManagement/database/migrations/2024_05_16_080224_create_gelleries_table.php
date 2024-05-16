@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('gelleries', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('image');
             $table->string('caption');
             $table->timestamps();
