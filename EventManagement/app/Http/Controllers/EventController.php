@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Country;
 
 class EventController extends Controller
 {
@@ -11,18 +12,20 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
     public function index(): View
+
     {
-        return view('events.index');
+        $countries = Country::all();
+        return view('events.index', compact('countries'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): view
     {
-        //
+        return view('events.create');
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */

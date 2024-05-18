@@ -4,6 +4,7 @@ use App\Http\Controllers\EventController; // Import the EventController class
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController; // Import the GalleryController class
 use Illuminate\Support\Facades\Route;
+use App\Models\Country; // Import the Country class
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/events', EventController::class);
     Route::resource('galleries',GalleryController::class);
+
+    Route::get('countries/{$country}', function (Country $country) {
+        return response()->json($country->cities);
+    });
 
 });
 
