@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/events', EventController::class);
     Route::resource('galleries',GalleryController::class);
 
-    Route::get('countries/{$country}', function (Country $country) {
+    Route::get('/countries/{country}', function (Country $country) {
         return response()->json($country->cities);
     });
 

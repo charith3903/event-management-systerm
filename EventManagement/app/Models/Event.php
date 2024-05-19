@@ -5,26 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
-
+    use HasFactory;
 
     protected $fillable = [
         'title',
         'slug',
+        'description',
         'start_date',
         'end_date',
         'start_time',
-        'description',
         'image',
         'address',
-        'city_id',
-        'country_id',
         'user_id',
-        'num_titles',
+        'country_id',
+        'city_id',
+        'num_tickets'
+    ];
+
+    protected $casts = [
+        'start_date' => 'date:m/d/Y',
+        'end_date' => 'date:m/d/Y',
     ];
 
     public function user(): BelongsTo
@@ -32,14 +37,13 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function city(): BelongsTo
-    {
-        return $this->belongsTo(City::class);
-    }
-
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 
     public function comments(): HasMany
@@ -50,7 +54,11 @@ class Event extends Model
     public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
+    }
 
+    public function savedEvents(): HasMany
+    {
+        return $this->hasMany(SavedEvent::class);
     }
 
     public function attendings(): HasMany
@@ -62,5 +70,9 @@ class Event extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-}
 
+    public function hasTag($tag)
+    {
+        return $this->tags->contains($tag);
+    }
+}

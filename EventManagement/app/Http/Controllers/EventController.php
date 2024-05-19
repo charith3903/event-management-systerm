@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateEventRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Country;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\Event;
+use Illuminate\Http\RedirectResponse;
 
 class EventController extends Controller
 {
@@ -12,26 +17,38 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
     public function index(): View
-
     {
-        $countries = Country::all();
-        return view('events.index', compact('countries'));
+        $events = Event::with('country')->get();
+        return view('events.index', compact('events'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): view
+    public function create(): View
     {
-        return view('events.create');
+        $countries = Country::all();
+        return view('events.create', compact('countries'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateEventRequest $request): RedirectResponse
     {
-        //
+        if ($request->hasFile('image')) {
+
+            $data = $request->validated();
+            $data['image'] = Storage::putFile('events', $request->file('image'));
+            $data['user_id'] = auth()->id();
+            $data['slug'] = Str::slug($request->title);
+
+            $event = Event::create($data);
+            $event->tags()->attach($request->tags);
+            return to_route('events.index');
+        } else {
+            return back();
+        }
     }
 
     /**
