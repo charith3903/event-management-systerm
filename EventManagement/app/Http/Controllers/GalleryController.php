@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
@@ -58,24 +59,46 @@ class GalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Gallery $gallery): View
     {
-        //
+        return view('galleries.edit', compact('gallery'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Gallery $gallery)
     {
-        //
+        $path = $gallery->image;
+        $request->validate([
+            'caption' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if($request->hasFile('image')) {
+            Storage::delete($gallery->image);
+            $path =  $request->file('image')->store('galleries', 'public');
+        }
+
+        $gallery->update([
+            'caption' => $request->input('caption'),
+            'image' => $path,
+        ]);
+
+        return to_route('galleries.index');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Gallery $gallery)
     {
-        //
+        Storage::delete($gallery->image);
+        $gallery->delete();
+
+        return back();
     }
+    
 }
