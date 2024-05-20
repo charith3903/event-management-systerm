@@ -33,6 +33,7 @@ class CreateEventRequest extends FormRequest
             'description' => 'required',
             'num_tickets' => 'required',
             'tags.*' => 'required|exists:tags,id',
+            'tags' => 'required|exists:tags,id',
         ];
     }
 }

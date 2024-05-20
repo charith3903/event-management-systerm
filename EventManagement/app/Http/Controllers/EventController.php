@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Tag;
 
 class EventController extends Controller
 {
@@ -28,7 +29,8 @@ class EventController extends Controller
     public function create(): View
     {
         $countries = Country::all();
-        return view('events.create', compact('countries'));
+        $tags = Tag::all();
+        return view('events.create', compact('countries', 'tags'));
     }
 
     /**
