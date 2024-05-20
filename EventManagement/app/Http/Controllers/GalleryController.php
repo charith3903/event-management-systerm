@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator; // Add this import statement
 
 class GalleryController extends Controller
 {
@@ -12,7 +14,8 @@ class GalleryController extends Controller
      */
     public function index(): View
     {
-        return view('galleries.index');
+       $galleries = auth()->user()->galleries;
+        return view('galleries.index', compact('galleries'));
     }
 
     /**
@@ -20,7 +23,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        return view('galleries.create');
     }
 
     /**
@@ -28,7 +31,20 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'caption' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($request->hasFile('image')) {
+            auth()->user()->galleries()->create([
+                'caption' => $request->input('caption'),
+                'image' => $request->file('image')->store('galleries', 'public'),
+            ]);
+
+            return to_route('galleries.index');
+        }
+
+        return back();
     }
 
     /**
