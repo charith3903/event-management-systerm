@@ -32,31 +32,32 @@
                     </thead>
                     <tbody>
                         @forelse($events as $event)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr class="bg-blue border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="px-6 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $event->title }}
                                 </th>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-6">
                                     {{ $event->start_date }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-6">
                                     {{ $event->country->name }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-6">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('events.edit', $event) }}"
-                                            class="text-green-400 hover:text-green-600">Edit</a>
-                                        <form method="POST" class="text-red-400 hover:text-red-600"
-                                            action="{{ route('events.destroy', $event) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="{{ route('events.destroy', $event) }}"
-                                                onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                                                Delete
-                                            </a>
-                                        </form>
+                                        <div>
+                                            <a href="{{ route('events.edit', $event) }}"
+                                               class="text-green-400 hover:text-green-600">Edit</a>
+                                        </div>
+                                        <div>
+                                            <form method="POST" action="{{ route('events.destroy', $event) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('events.destroy', $event) }}"
+                                                   class="text-red-400 hover:text-red-600"
+                                                   onclick="event.preventDefault(); this.closest('form').submit();">Delete</a>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
