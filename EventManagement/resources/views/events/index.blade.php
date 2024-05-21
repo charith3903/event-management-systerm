@@ -1,72 +1,47 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Events') }}
-            </h2>
-            <div>
-                <a href="{{ route('events.create') }}" class="dark:text-white hover:text-slate-200">New Event</a>
-            </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <div class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end bg-dark text-white flex justify-between items-center">
+        <h2 class="font-semibold text-xl leading-tight">
+            {{ __('My Events') }}
+        </h2>
+        <div>
+            <a href="{{ route('events.create') }}" class="text-white">New Event</a>
         </div>
-        
-    </x-slot>
+    </div>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table mx-auto table-lg"> <!-- Add 'table-lg' class to increase table size -->
+                    <thead class="text-lg text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Title
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Start Date
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Country
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($events as $event)
-                            <tr class="bg-blue border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $event->title }}
-                                </th>
-                                <td class="px-6 py-6">
-                                    {{ $event->start_date }}
-                                </td>
-                                <td class="px-6 py-6">
-                                    {{ $event->country->name }}
-                                </td>
-                                <td class="px-6 py-6">
-                                    <div class="flex space-x-2">
-                                        <div>
-                                            <a href="{{ route('events.edit', $event) }}"
-                                               class="text-green-400 hover:text-green-600">Edit</a>
-                                        </div>
-                                        <div>
-                                            <form method="POST" action="{{ route('events.destroy', $event) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="{{ route('events.destroy', $event) }}"
-                                                   class="text-red-400 hover:text-red-600"
-                                                   onclick="event.preventDefault(); this.closest('form').submit();">Delete</a>
-                                            </form>
-                                        </div>
+                            <tr class="bg-blue border-bottom dark:bg-gray-800 dark:border-gray-700">
+                                <td class="font-medium py-4 px-6">{{ $event->title }}</td> <!-- Add 'py-4' class for vertical padding -->
+                                <td class="py-4 px-6">{{ $event->start_date }}</td>
+                                <td class="py-4 px-6">{{ $event->country->name }}</td>
+                                <td class="py-4 px-6">
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('events.edit', $event) }}" class="text-success">Edit</a>
+                                        <form method="POST" action="{{ route('events.destroy', $event) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="{{ route('events.destroy', $event) }}" class="text-danger"
+                                               onclick="event.preventDefault(); this.closest('form').submit();">Delete</a>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                    No events found
-                                </td>
+                                <td colspan="4" class="text-center text-gray-500 dark:text-gray-400">No events found</td>
                             </tr>
                         @endforelse
                     </tbody>

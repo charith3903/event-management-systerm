@@ -1,69 +1,57 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Gallery') }}
-            </h2>
-            <div>
-                <a href="{{ route('galleries.create') }}" class="dark:text-white hover:text-slate-200">New Gallery</a>
-            </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <div class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end bg-dark text-white flex justify-between items-center">
+        <h2 class="font-semibold text-xl leading-tight">
+            {{ __('My Gallerise') }}
+        </h2>
+        <div>
+            <a href="{{ route('galleries.create') }}" class="text-white">New Gallery</a>
         </div>
-    </x-slot>
+    </div>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Image
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Caption
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($galleries as $gallery)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <img src="{{ asset('storage/' . $gallery->image) }}" class="w-20 h-20">
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ $gallery->caption }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-2">
-                                        <a href="{{ route('galleries.edit', $gallery) }}"
-                                            class="text-green-400 hover:text-green-600">Edit</a>
-                                        <form method="POST" class="text-red-400 hover:text-red-600"
-                                            action="{{ route('galleries.destroy', $gallery) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="{{ route('galleries.destroy', $gallery) }}"
-                                                onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                                                Delete
-                                            </a>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                    No Gallery found
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Caption</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($galleries as $gallery)
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('storage/' . $gallery->image) }}" class="img-thumbnail" style="width: 120px; height: 120px;">
+                                        </td>
+                                        <td>{{ $gallery->caption }}</td>
+                                        <td>
+                                            <div class="btn-group gap-2" role="group" aria-label="Gallery actions">
+                                                <a href="{{ route('galleries.edit', $gallery) }}" class="text-success">Edit</a>
+                                                <form method="POST" action="{{ route('galleries.destroy', $gallery) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"class="text-danger" onclick="return confirm('Are you sure you want to delete this gallery?')">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">No Gallery found</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </x-app-layout>
