@@ -5,10 +5,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController; // Import the GalleryController class
 use Illuminate\Support\Facades\Route;
 use App\Models\Country; // Import the Country class
+use App\Http\Controllers\WelcomeController; // Import the WelcomeController class
+use App\Http\Controllers\EventShowController; // Import the EventShowController class
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', WelcomeController::class)->name('welcome');
+Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

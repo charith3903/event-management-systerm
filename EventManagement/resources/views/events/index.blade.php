@@ -8,6 +8,7 @@
                 <a href="{{ route('events.create') }}" class="dark:text-white hover:text-slate-200">New Event</a>
             </div>
         </div>
+        
     </x-slot>
 
     <div class="py-12">

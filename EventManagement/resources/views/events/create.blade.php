@@ -5,6 +5,7 @@
                 {{ __('New Event') }}
             </h2>
         </div>
+        
     </x-slot>
 
     <div class="py-12">
