@@ -13,8 +13,10 @@ class DbEventShowController extends Controller
     public function __invoke($id)
      {
         $event = Event::findOrFail($id);
+        $like=$event->likes()->where('user_id', auth()->id())->first();
 
-        return view('dbEventShow', compact('event'));
+
+        return view('dbEventShow', compact('event', 'like'));
 
 
     }

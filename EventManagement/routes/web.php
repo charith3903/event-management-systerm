@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Country; // Import the Country class
 use App\Http\Controllers\WelcomeController; // Import the WelcomeController class
 use App\Http\Controllers\EventShowController; // Import the EventShowController class
+use App\Http\Controllers\LikeSystemController;
 
 Route::get('/', WelcomeController::class)->name('welcome');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/events', EventController::class);
     Route::resource('galleries',GalleryController::class);
+    Route::post('/events-like/{id}', LikeSystemController::class)->name('events.like');
 
     Route::get('/countries/{country}', function (Country $country) {
         return response()->json($country->cities);

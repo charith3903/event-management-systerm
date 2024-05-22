@@ -11,9 +11,9 @@
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: white;
-            background: linear-gradient(270deg, #2a2028, #3eabeef7);
+            background: linear-gradient(270deg, #f0ddec, #3eabeef7);
             background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            animation: gradientBG 7s ease infinite;
         }
 
         .nav-link {
