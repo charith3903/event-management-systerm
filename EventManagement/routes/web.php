@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashBoardController;
+use App\Http\Controllers\DbEventShowController;
 use App\Http\Controllers\EventController; // Import the EventController class
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController; // Import the GalleryController class
@@ -12,6 +13,7 @@ use App\Http\Controllers\EventShowController; // Import the EventShowController 
 Route::get('/', WelcomeController::class)->name('welcome');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/dashboard', DashBoardController::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard/e/{id}', DbEventShowController::class)->name('dbEventShow');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

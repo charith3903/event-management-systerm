@@ -31,7 +31,7 @@
                                         <span class="badge bg-secondary">{{ $tag->name }}</span>
                                     @endforeach
                                 </div>
-                                <a href="{{ route('dashboard', $event->id) }}" class="btn btn-primary mt-2">More info</a>
+                                <a href="{{ route('dbEventShow', $event->id) }}" class="btn btn-primary mt-2">More info</a>
                             </div>
                         </div>
                     </div>
