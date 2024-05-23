@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 
-
 class LikeSystemController extends Controller
 {
     /**
@@ -13,13 +12,13 @@ class LikeSystemController extends Controller
     public function __invoke($id)
     {
         $event = Event::findOrFail($id);
-        $like =$event->like()->where('user_id', auth()->id())->first();
-        if(!is_null($like)) {
+        $like = $event->likes()->where('user_id', auth()->id())->first();
+        if (!is_null($like)) {
             $like->delete();
             return null;
         } else {
             $like = $event->likes()->create([
-                'user_id'=>auth()->id()
+                'user_id' => auth()->id()
             ]);
             return $like;
         }
