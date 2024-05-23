@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Comment extends Model
 {
     use HasFactory;
-x
 
     protected $fillable = [
         'user_id',
         'event_id',
-        'content',
+        'content'
     ];
 
     public function user(): BelongsTo
@@ -22,7 +21,7 @@ x
         return $this->belongsTo(User::class);
     }
 
-    public function user(): BelongsTo
+    public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }

@@ -117,21 +117,50 @@
                         </div>
                     </div>
                 </div>
-                <div
-                class="container d-flex justify-content-center align-items-center w-200 mt-6 bg-slate-200 p-1 rounded-md">
-                <div class="">
-                    <form  class="flex justify-between space-x-2 width : 100px;"
-                        method="POST">
+             </div>
+             <div class="container-fluid d-flex flex-column align-items-center mt-4 bg-light p-4 rounded">
+                <div class="w-100 mb-4">
+                    <form action="{{ route('events.comments', $event->id) }}" class="d-flex gap-2" method="POST">
                         @csrf
-                        <input type="text"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="content" id="content" placeholder="Comment">
-                        <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Post
-                        </button>
+                        <input type="text" class="form-control" name="content" id="content" placeholder="Comment">
+                        <button type="submit" class="btn btn-primary">Post</button>
                     </form>
                 </div>
+                <div class="w-100">
+                    <div class="row">
+                        @foreach ($event->comments()->latest()->get() as $comment)
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center rounded bg-white p-3 shadow-sm">
+                                    <div>
+                                        <div class="d-flex gap-2 align-items-center mb-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            <h2 class="h6 fw-bold text-dark mb-0">{{ $comment->user->name }}</h2>
+                                        </div>
+                                        <p class="small text-muted mb-0">{{ $comment->content }}</p>
+                                        {{-- <form action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}" method="POST" class="mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">Delete</button>
+                                        </form> --}}
+                                        {{-- @can('view', $comment)
+                                            <form action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}" method="POST" class="mt-2">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        @endcan --}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+
+
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\DbEventShowController;
+use App\Http\Controllers\DeleteCommentController;
 use App\Http\Controllers\EventController; // Import the EventController class
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController; // Import the GalleryController class
@@ -10,6 +11,7 @@ use App\Models\Country; // Import the Country class
 use App\Http\Controllers\WelcomeController; // Import the WelcomeController class
 use App\Http\Controllers\EventShowController; // Import the EventShowController class
 use App\Http\Controllers\LikeSystemController;
+use App\Http\Controllers\StoreCommentController; // Import the StoreCommentController class
 
 Route::get('/', WelcomeController::class)->name('welcome');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
@@ -24,7 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/events', EventController::class);
     Route::resource('galleries',GalleryController::class);
     Route::post('/events-like/{id}', LikeSystemController::class)->name('events.like');
-
+    Route::post('/events/{id}/comments', StoreCommentController::class)->name('events.comments');
+    Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
+    
     Route::get('/countries/{country}', function (Country $country) {
         return response()->json($country->cities);
     });
