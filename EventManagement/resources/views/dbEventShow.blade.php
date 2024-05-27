@@ -35,23 +35,13 @@
 
                     <div class="mt-4 d-flex" x-data="{
                         eventLike: @js($like),
-                        {{-- savedEvent: @js($savedEvent),
-                        attending: @js($attending), --}}
+
                         onHandleLike() {
                             axios.post(`/events-like/{{ $event->id }}`).then(res => {
                                 this.eventLike = res.data
                             })
                         },
-                        {{-- onHandleSavedEvent() {
-                            axios.post(`/events-saved/{{ $event->id }}`).then(res => {
-                                this.savedEvent = res.data
-                            })
-                        },
-                        onHandleAttending() {
-                            axios.post(`/events-attending/{{ $event->id }}`).then(res => {
-                                this.attending = res.data
-                            })
-                        } --}}
+
                     }">
                         <button type="button" @click="onHandleLike"  class="btn btn-primary"
                         :class="eventLike ? 'btn btn-danger' :'btn btn-primary'">
@@ -60,18 +50,7 @@
                             </svg>
                             Like
                         </button>
-                        <button type="button" class="btn btn-warning me-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="me-2" style="width: 20px; height: 20px;">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                            </svg>
-                            Save
-                        </button>
-                        <button type="button" class="btn btn-primary" style="width: auto; height: auto;">
-                            Attending
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10" class="ms-2" style="width: 20px; height: 20px;">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
+
                     </div>
 
                     <div class="mt-4 p-3 border rounded">
@@ -139,18 +118,13 @@
                                             <h2 class="h6 fw-bold text-dark mb-0">{{ $comment->user->name }}</h2>
                                         </div>
                                         <p class="small text-muted mb-0">{{ $comment->content }}</p>
-                                        {{-- <form action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}" method="POST" class="mt-2">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm">Delete</button>
-                                        </form> --}}
-                                        {{-- @can('view', $comment)
+                                        @can('view', $comment)
                                             <form action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}" method="POST" class="mt-2">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-sm">Delete</button>
                                             </form>
-                                        @endcan --}}
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -158,8 +132,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             </div>
         </div>

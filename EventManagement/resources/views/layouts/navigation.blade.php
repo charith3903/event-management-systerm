@@ -3,13 +3,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             <div class="flex">
-                <!-- Logo -->
-               {{--  <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
-                </div> --}}
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <div class="shrink-0 flex items-center">
@@ -26,21 +19,16 @@
                     <x-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.index')">
                         {{ __('Gallery') }}
                     </x-nav-link>
-                    {{-- <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')">
+                    <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')">
                         {{ __('Liked Events') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('savedEvents')" :active="request()->routeIs('savedEvents')">
-                        {{ __('Saved Events') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('attendingEvents')" :active="request()->routeIs('attendingEvents')">
-                        {{ __('Attending Events') }}
-                    </x-nav-link>
-                </div> --}}
+
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6 ml-auto bg-gray-800 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-                <x-dropdown align="right" width="48" class="bg-gray">
+            <div class="hidden sm:flex sm:items-center sm:ml-6 ml-auto">
+                <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-gray-800 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
@@ -57,7 +45,7 @@
                         </button>
                     </x-slot>
 
-                    <x-slot name="content" class="bg-gray ">
+                    <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

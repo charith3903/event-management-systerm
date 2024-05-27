@@ -26,7 +26,7 @@
                             <img src="{{ asset('/storage/' . $event->image) }}" class="card-img-top" alt="{{ $event->title }}" style="height: 12rem; object-fit: cover;"> <!-- Fixed image size -->
                             <div class="card-body">
                                 <h5 class="card-title">{{ $event->title }}</h5>
-                                <h6 class="card-title">{{ $event->start_date }}</h6>
+                                <h6 class="card-title">{{ $event->start_date->format('m/d/Y') }}</h6>
                                 <h6 class="card-title">{{ $event->start_time }}</h6>
                                 <div>
                                     @foreach ($event->tags as $tag)

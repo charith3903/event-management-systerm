@@ -6,6 +6,7 @@ use App\Http\Controllers\DeleteCommentController;
 use App\Http\Controllers\EventController; // Import the EventController class
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GalleryController; // Import the GalleryController class
+use App\Http\Controllers\LikedEventController; // Import the LikedEventsController class
 use Illuminate\Support\Facades\Route;
 use App\Models\Country; // Import the Country class
 use App\Http\Controllers\WelcomeController; // Import the WelcomeController class
@@ -28,11 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/events-like/{id}', LikeSystemController::class)->name('events.like');
     Route::post('/events/{id}/comments', StoreCommentController::class)->name('events.comments');
     Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
-    
+
+    Route::get('/liked-events', LikedEventController::class)->name('likedEvents');
+});
+
     Route::get('/countries/{country}', function (Country $country) {
         return response()->json($country->cities);
     });
 
-});
+
 
 require __DIR__.'/auth.php';
